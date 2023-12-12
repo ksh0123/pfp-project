@@ -1,5 +1,5 @@
 import { useSDK } from "@metamask/sdk-react";
-import { FC, Dispatch, SetStateAction } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 
 interface HeaderProps {
