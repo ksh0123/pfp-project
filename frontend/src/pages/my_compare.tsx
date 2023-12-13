@@ -7,38 +7,39 @@ import axios from "axios";
 import MyNftCard from "../components/MyNftCard";
 
 const My: FC = () => {
-  const { mintNftContract, account } = useOutletContext<OutletContext>();
+  const { mintNftContract, account } = useOutletContext<MyOutletContext>();
+  // Layout 에 인터페이스 export로 받아옴.
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [metadataArray, setMetadataArray] = useState<NftMetadata[]>([]);
 
-  const getMyNFTs = async () => {
+  const getMyNft = async () => {
     try {
       if (!mintNftContract || !account) return;
 
-      // @ts-expect-error
+      //@ts-expect-error
       const balance = await mintNftContract.methods.balanceOf(account).call();
 
       let temp: NftMetadata[] = [];
 
       for (let i = 0; i < Number(balance); i++) {
         const tokenId = await mintNftContract.methods
-          // @ts-expect-error
+          //@ts-expect-error
           .tokenOfOwnerByIndex(account, i)
           .call();
 
         const metadataURI: string = await mintNftContract.methods
-          // @ts-expect-error
+          //@ts-expect-error
           .tokenURI(tokenId)
           .call();
 
         const response = await axios.get(metadataURI);
 
         temp.push({ ...response.data, tokenId: Number(tokenId) });
+        // 토큰아이디 포함.
       }
-
       setMetadataArray(temp);
     } catch (error) {
-      console.error(error);
+      console.warn("err");
     }
   };
 
@@ -49,7 +50,7 @@ const My: FC = () => {
   };
 
   useEffect(() => {
-    getMyNFTs();
+    getMyNft();
   }, [mintNftContract, account]);
 
   useEffect(() => {
@@ -58,13 +59,13 @@ const My: FC = () => {
 
   return (
     <>
-      <div className="bg-green-100 grow">
-        <div className="bg-purple-100 text-right p-2">
+      <div className=" grow">
+        <div className="text-right p-2">
           <button className="hover:text-gray-500" onClick={onClickMintModal}>
             Mint
           </button>
         </div>
-        <div className="bg-pink-100 text-center py-8">
+        <div className="text-center py-8">
           <h1 className="font-bold text-2xl">My NFTs</h1>
         </div>
         <ul className="p-8 grid grid-cols-3 gap-2">
@@ -75,6 +76,7 @@ const My: FC = () => {
               name={v.name}
               tokenId={v.tokenId!}
             />
+            // ! 존재한다
           ))}
         </ul>
       </div>
