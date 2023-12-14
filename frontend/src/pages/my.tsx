@@ -4,7 +4,8 @@ import { OutletContext } from "../components/Layout";
 import MintModal from "../components/MintModal";
 
 import axios from "axios";
-import MyNftCard from "../components/MyNftCard";
+import MyNftCard from "../components/NftCard";
+import { NftMetadata } from "../types";
 
 const My: FC = () => {
   const { mintNftContract, account } = useOutletContext<OutletContext>();
