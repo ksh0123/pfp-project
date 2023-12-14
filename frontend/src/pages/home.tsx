@@ -13,7 +13,7 @@ const Home: FC = () => {
     try {
       if (!mintNftContract) return;
 
-      const totalNFT = await mintNftContract.methods.totalSupply().call();
+      const totalSupply = await mintNftContract.methods.totalSupply().call();
 
       setSearchTokenId(Number(totalNFT));
     } catch (error) {
