@@ -12,7 +12,10 @@ root.render(
   <React.StrictMode>
     <MetaMaskProvider
       sdkOptions={{
-        dappMetadata: { name: "PFP Project", url: window.location.host },
+        dappMetadata: {
+          name: "PFP Project",
+          url: window.location.host,
+        },
       }}
     >
       <App />
